@@ -1,0 +1,396 @@
+/* 可复用组件类。全部引用 tokens.css 的变量。 */
+
+/* ─────────────── 按钮 ─────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-1);
+  padding: 0 var(--sp-4);
+  height: 34px;
+  font-size: var(--fs-md);
+  font-weight: 500;
+  border-radius: var(--r-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--brand);
+  color: var(--text-on-brand);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--brand-hover);
+}
+
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-accent:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-2);
+  border-color: var(--border);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  color: var(--text-1);
+  background: var(--surface-2);
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: #fff;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: var(--danger-hover);
+}
+
+.btn-sm {
+  height: 28px;
+  padding: 0 var(--sp-3);
+  font-size: var(--fs-sm);
+}
+
+.btn-icon {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  color: var(--text-2);
+  border-radius: var(--r-md);
+}
+
+.btn-icon:hover:not(:disabled) {
+  background: var(--surface-2);
+  color: var(--text-1);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* ─────────────── 卡片 ─────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-1);
+}
+
+.card-hover {
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.card-hover:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-2);
+}
+
+/* ─────────────── 表单 ─────────────── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  margin-bottom: var(--sp-4);
+}
+
+.label {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text-2);
+}
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  padding: 0 var(--sp-3);
+  height: 36px;
+  font-size: var(--fs-md);
+  font-family: inherit;
+  color: var(--text-1);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+}
+
+.textarea {
+  height: auto;
+  padding: var(--sp-2) var(--sp-3);
+  resize: vertical;
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: var(--focus-ring);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--text-3);
+}
+
+.select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238794ab' stroke-width='2.4'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--sp-3) center;
+  padding-right: var(--sp-6);
+  cursor: pointer;
+}
+
+/* ─────────────── 徽章 / 标签 ─────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: 2px var(--sp-2);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  border-radius: var(--r-full);
+  line-height: 1.6;
+}
+
+.badge-success { background: var(--success-soft); color: var(--success); }
+.badge-warning { background: var(--warning-soft); color: var(--warning); }
+.badge-danger { background: var(--danger-soft); color: var(--danger); }
+.badge-info { background: var(--info-soft); color: var(--info); }
+.badge-neutral { background: var(--surface-2); color: var(--text-2); }
+
+.badge .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px var(--sp-2);
+  font-size: var(--fs-xs);
+  color: var(--text-2);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+}
+
+/* ─────────────── 加载 ─────────────── */
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-2);
+  border-radius: var(--r-sm);
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  animation: shimmer 1.4s infinite;
+}
+
+:root[data-theme="dark"] .skeleton::after {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+}
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
+/* ─────────────── 空态 ─────────────── */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-8) var(--sp-4);
+  color: var(--text-3);
+  text-align: center;
+}
+
+.empty svg {
+  color: var(--text-3);
+}
+
+.empty-title {
+  font-size: var(--fs-lg);
+  font-weight: 500;
+  color: var(--text-2);
+}
+
+/* ─────────────── 页头 ─────────────── */
+.page-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-5);
+}
+
+.page-head h1 {
+  font-size: var(--fs-2xl);
+  font-weight: 600;
+  color: var(--text-1);
+  line-height: 1.3;
+}
+
+.page-sub {
+  font-size: var(--fs-md);
+  color: var(--text-3);
+  margin-top: var(--sp-1);
+}
+
+/* ─────────────── 布局工具 ─────────────── */
+.row { display: flex; align-items: center; gap: var(--sp-2); }
+.col { display: flex; flex-direction: column; gap: var(--sp-2); }
+.between { justify-content: space-between; }
+.flex-1 { flex: 1; min-width: 0; }
+.wrap { flex-wrap: wrap; }
+
+.grid-kb {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--sp-4);
+}
+
+.mt-2 { margin-top: var(--sp-2); }
+.mt-4 { margin-top: var(--sp-4); }
+.mt-6 { margin-top: var(--sp-6); }
+.mb-2 { margin-bottom: var(--sp-2); }
+.mb-4 { margin-bottom: var(--sp-4); }
+
+.text-2 { color: var(--text-2); }
+.text-3 { color: var(--text-3); }
+.text-xs { font-size: var(--fs-xs); }
+.text-sm { font-size: var(--fs-sm); }
+.mono { font-family: var(--font-mono); }
+
+/* ─────────────── 聊天 Markdown ─────────────── */
+.md-body {
+  font-size: var(--fs-md);
+  line-height: 1.7;
+  word-break: break-word;
+}
+
+.md-body > * + * { margin-top: var(--sp-3); }
+
+.md-body h1, .md-body h2, .md-body h3, .md-body h4 {
+  font-weight: 600;
+  line-height: 1.4;
+  margin-top: var(--sp-5);
+}
+
+.md-body h1 { font-size: var(--fs-xl); }
+.md-body h2 { font-size: var(--fs-lg); }
+.md-body h3, .md-body h4 { font-size: var(--fs-md); }
+
+.md-body ul, .md-body ol {
+  padding-left: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.md-body code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--surface-2);
+  padding: 1px var(--sp-1);
+  border-radius: var(--r-sm);
+}
+
+.md-body pre {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--sp-3);
+  overflow-x: auto;
+}
+
+.md-body pre code {
+  background: none;
+  padding: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+}
+
+.md-body blockquote {
+  border-left: 3px solid var(--border-strong);
+  padding-left: var(--sp-3);
+  color: var(--text-2);
+}
+
+.md-body table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: var(--fs-sm);
+}
+
+.md-body th, .md-body td {
+  border: 1px solid var(--border);
+  padding: var(--sp-1) var(--sp-2);
+  text-align: left;
+}
+
+.md-body th { background: var(--surface-2); font-weight: 500; }
+
+/* 引用角标 [n] */
+.md-body sup.cite {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 3px;
+  margin: 0 2px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: var(--r-full);
+  cursor: pointer;
+  vertical-align: super;
+  line-height: 1;
+  border: none;
+  font-family: inherit;
+}
+
+.md-body sup.cite:hover {
+  background: var(--accent);
+  color: #fff;
+}

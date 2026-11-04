@@ -1,0 +1,48 @@
+# ── Web 框架 ──
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20
+pydantic==2.10.4
+pydantic-settings==2.7.1
+email-validator==2.2.0
+
+# ── 数据库 ──
+SQLAlchemy==2.0.36
+psycopg2-binary==2.9.10
+alembic==1.20.0
+
+# ── MCP ──
+mcp==2.3.0
+
+# ── 测试 ──
+pytest==9.1.1
+
+# ── 向量库 / 缓存 / 对象存储 ──
+pymilvus==3.0.0
+redis==5.2.1
+minio==7.2.13
+
+# ── LLM / 切片 ──
+openai==1.59.3
+langchain-text-splitters==1.0.2
+
+# ── Embedding / Reranker(本地 bge 系列)──
+# ⚠️ transformers 必须钉 4.57.6:bge-m3 需要 dtype kwarg(4.50+),FlagReranker 需要
+#    tokenizer.prepare_for_model(5.x 已移除)。4.57.6 是两者兼容甜点,勿让 pip 升级。
+torch==2.13.0
+sentence-transformers==5.6.0
+FlagEmbedding==1.4.0
+transformers==4.57.6
+
+# ── 文档解析 ──
+pymupdf4llm==0.0.17
+pymupdf==1.25.3
+openpyxl==3.1.5
+python-docx==1.1.2
+trafilatura==2.1.0
+
+# ── 鉴权 / 异步 / HTTP ──
+bcrypt==4.2.1
+PyJWT==2.10.1
+celery==5.4.0
+httpx==0.28.1

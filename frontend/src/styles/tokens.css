@@ -1,0 +1,115 @@
+/* 设计 token:浅色为默认,深色经 :root[data-theme="dark"] 整体覆盖。
+   规则:组件/scoped 样式只许引用 token,禁止写死颜色 —— 这是双主题成立的前提。 */
+
+:root {
+  color-scheme: light;
+
+  /* 品牌与强调 */
+  --brand: #1a3a5c;
+  --brand-hover: #234a72;
+  --brand-soft: #e8eef6;
+  --brand-on: #ffffff;
+  --accent: #0d9488;
+  --accent-hover: #0b7d73;
+  --accent-soft: #ccfbf1;
+
+  /* 语义色 */
+  --success: #2f855a;
+  --success-soft: #dcfce7;
+  --warning: #b45309;
+  --warning-soft: #fef3c7;
+  --danger: #c53030;
+  --danger-hover: #b02a2a;
+  --danger-soft: #fee2e2;
+  --info: #2b6cb0;
+  --info-soft: #dbeafe;
+
+  /* 表面与边框 */
+  --bg: #f5f7fa;
+  --surface: #ffffff;
+  --surface-2: #f1f4f8;
+  --border: #e3e8ef;
+  --border-strong: #cbd5e1;
+  --mask: rgba(15, 23, 42, 0.45);
+
+  /* 文字三级 */
+  --text-1: #1a2433;
+  --text-2: #52607a;
+  --text-3: #8794ab;
+  --text-on-brand: #ffffff;
+
+  /* 阴影 */
+  --shadow-1: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-2: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --shadow-3: 0 12px 32px rgba(15, 23, 42, 0.14);
+
+  /* 圆角 */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-full: 999px;
+
+  /* 间距(4 的倍数) */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-7: 32px;
+  --sp-8: 40px;
+
+  /* 字号 */
+  --fs-xs: 12px;
+  --fs-sm: 13px;
+  --fs-md: 14px;
+  --fs-lg: 16px;
+  --fs-xl: 20px;
+  --fs-2xl: 24px;
+
+  /* 布局 */
+  --sidebar-w: 248px;
+  --focus-ring: 0 0 0 3px rgba(13, 148, 136, 0.25);
+
+  --font-sans: "PingFang SC", "Microsoft YaHei", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", Consolas, "Courier New", monospace;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --brand: #3d6d9e;
+  --brand-hover: #4d7fb2;
+  --brand-soft: rgba(90, 140, 190, 0.16);
+  --brand-on: #ffffff;
+  --accent: #2dd4bf;
+  --accent-hover: #5ce0d0;
+  --accent-soft: rgba(45, 212, 191, 0.14);
+
+  --success: #48bb78;
+  --success-soft: rgba(72, 187, 120, 0.16);
+  --warning: #dd9f3a;
+  --warning-soft: rgba(221, 159, 58, 0.16);
+  --danger: #f87171;
+  --danger-hover: #fca5a5;
+  --danger-soft: rgba(248, 113, 113, 0.14);
+  --info: #63a4e0;
+  --info-soft: rgba(99, 164, 224, 0.14);
+
+  --bg: #0d1420;
+  --surface: #151e2e;
+  --surface-2: #1c2740;
+  --border: #263349;
+  --border-strong: #35455f;
+  --mask: rgba(0, 0, 0, 0.6);
+
+  --text-1: #e6edf7;
+  --text-2: #a8b6cc;
+  --text-3: #6d7d96;
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-2: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --shadow-3: 0 12px 32px rgba(0, 0, 0, 0.5);
+
+  --focus-ring: 0 0 0 3px rgba(45, 212, 191, 0.3);
+}

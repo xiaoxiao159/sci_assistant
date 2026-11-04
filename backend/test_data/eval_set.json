@@ -1,0 +1,22 @@
+[
+  {
+    "question": "一线城市普通员工出差住宿标准是多少?",
+    "expected_answer": "每晚 500 元",
+    "relevant_doc_filename": "sample.md"
+  },
+  {
+    "question": "出差交通补贴每天多少钱?",
+    "expected_answer": "每天 100 元",
+    "relevant_doc_filename": "sample.md"
+  },
+  {
+    "question": "住宿超标了怎么处理?",
+    "expected_answer": "需提前向直属上级申请审批,未经审批的超标费用由个人承担",
+    "relevant_doc_filename": "sample.md"
+  },
+  {
+    "question": "出差报销申请要在几天内提交?",
+    "expected_answer": "5 个工作日内",
+    "relevant_doc_filename": "sample.md"
+  }
+]

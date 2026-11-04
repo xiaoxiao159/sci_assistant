@@ -1,0 +1,125 @@
+# sci_assistant 全栈编排:数据层 + 后端(API/Celery)+ 前端
+# 用法:cd sci_assistant/deploy && docker compose up -d
+# 注意:首次启动前需在 backend/ 放好 .env(从 .env.example 复制并填 key)
+
+services:
+  # ───────── 数据层 ─────────
+  postgres:
+    image: postgres:17
+    container_name: sci_assistant-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: sci_assistant
+    ports: ["5432:5432"]
+    volumes: ["pg_data:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  etcd:
+    image: quay.io/coreos/etcd:v3.5.16
+    container_name: sci_assistant-etcd
+    environment:
+      - ETCD_AUTO_COMPACTION_MODE=revision
+      - ETCD_AUTO_COMPACTION_RETENTION=1000
+      - ETCD_QUOTA_BACKEND_BYTES=4294967296
+      - ETCD_SNAPSHOT_COUNT=50000
+    command: etcd -advertise-client-urls=http://etcd:2379 -listen-client-urls=http://0.0.0.0:2379 --data-dir /etcd
+    volumes: ["etcd_data:/etcd"]
+    healthcheck:
+      test: ["CMD", "etcdctl", "endpoint", "health"]
+      interval: 10s
+      retries: 5
+
+  minio:
+    image: minio/minio:RELEASE.2024-09-13T20-26-02Z
+    container_name: sci_assistant-minio
+    command: minio server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    # 对外端口让位给 app 的独立 minio(backend/.env 指向 localhost:9000);
+    # milvus 走 compose 内部网络 minio:9000,不受此影响。2026-09 docker 重建时调整。
+    ports: ["9100:9000", "9101:9001"]
+    volumes: ["minio_data:/data"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      retries: 5
+
+  milvus:
+    image: milvusdb/milvus:v2.4.10
+    container_name: sci_assistant-milvus
+    command: ["milvus", "run", "standalone"]
+    environment:
+      ETCD_ENDPOINTS: etcd:2379
+      MINIO_ADDRESS: minio:9000
+    ports: ["19530:19530", "9091:9091"]
+    volumes: ["milvus_data:/var/lib/milvus"]
+    depends_on:
+      etcd: { condition: service_healthy }
+      minio: { condition: service_healthy }
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9091/healthz"]
+      interval: 15s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: sci_assistant-redis
+    ports: ["6379:6379"]
+    volumes: ["redis_data:/data"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 5
+
+  # ───────── 后端 API ─────────
+  backend:
+    build: ../backend
+    container_name: sci_assistant-backend
+    env_file: ../backend/.env
+    environment:
+      POSTGRES_HOST: postgres
+      MILVUS_HOST: milvus
+      REDIS_URL: redis://redis:6379/0
+      MINIO_ENDPOINT: minio:9000
+    ports: ["8001:8001"]
+    depends_on:
+      postgres: { condition: service_healthy }
+      milvus: { condition: service_healthy }
+      redis: { condition: service_healthy }
+      minio: { condition: service_healthy }
+
+  # ───────── Celery worker(文档摄入异步管线)─────────
+  celery_worker:
+    build: ../backend
+    container_name: sci_assistant-celery
+    env_file: ../backend/.env
+    environment:
+      POSTGRES_HOST: postgres
+      MILVUS_HOST: milvus
+      REDIS_URL: redis://redis:6379/0
+      MINIO_ENDPOINT: minio:9000
+    command: celery -A app.workers.celery_app worker -B --loglevel=info
+    depends_on:
+      backend: { condition: service_started }
+      redis: { condition: service_healthy }
+
+  # ───────── 前端 ─────────
+  frontend:
+    build: ../frontend
+    container_name: sci_assistant-frontend
+    ports: ["8080:80"]
+    depends_on:
+      backend: { condition: service_started }
+
+volumes:
+  pg_data:
+  etcd_data:
+  minio_data:
+  milvus_data:
+  redis_data:
